@@ -4,6 +4,7 @@
   <img src="https://img.shields.io/badge/AI-Google%20Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Gemini">
   <img src="https://img.shields.io/badge/Healthcare-Triage-0EA5E9?style=for-the-badge" alt="Healthcare Triage">
   <img src="https://img.shields.io/badge/Status-Active-22C55E?style=for-the-badge" alt="Active">
+  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" alt="MIT License">
 </p>
 
 <p align="center">
@@ -12,6 +13,12 @@
 
 <p align="center">
   Understand symptoms. Ask intelligent questions. Find the right level of care.
+</p>
+
+<p align="center">
+  <a href="https://lodging-ever-screen-shaved.trycloudflare.com/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Open%20App-FF6B6B?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Live Demo">
+  </a>
 </p>
 
 <br>
@@ -26,6 +33,16 @@
 
 ---
 
+## 🌐 Live Demo
+
+MediBridge is deployed and publicly accessible here:
+
+**[https://lodging-ever-screen-shaved.trycloudflare.com/](https://lodging-ever-screen-shaved.trycloudflare.com/)**
+
+> ⚠️ This link is served via a Cloudflare Tunnel and may be temporary/rotate over time. If it's unreachable, run the project locally using the [Installation](#installation) steps below.
+
+---
+
 ## About
 
 **MediBridge** is an AI-powered healthcare triage assistant built using **Google Gemini**.
@@ -35,6 +52,8 @@ It understands user-reported symptoms, asks intelligent follow-up questions, and
 The goal is simple:
 
 > **Make initial healthcare guidance faster, simpler, and more accessible.**
+
+> **Disclaimer:** MediBridge is an informational triage assistant, not a diagnostic or medical device. It does not replace professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for medical concerns, and seek emergency care immediately for life-threatening symptoms.
 
 ---
 
@@ -544,15 +563,103 @@ Keeps sensitive API configuration separate from source code.
 </td>
 </tr>
 
+<tr>
+<td>
+
+<strong>Cloudflare Tunnel</strong>
+
+</td>
+<td>
+
+Used to expose the local development server publicly for the live demo.
+
+</td>
+</tr>
+
 </table>
 
 ---
 
 # Installation
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- npm, yarn, or pnpm
+- A [Google Gemini API key](https://ai.google.dev/)
+
 ## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/medibridge.git
-
 cd medibridge
+```
+
+## 2. Install Dependencies
+
+```bash
+npm install
+```
+
+## 3. Configure Environment Variables
+
+Create a `.env` (or `.env.local`) file in the project root and add your Gemini API key:
+
+```bash
+GEMINI_API_KEY=your_google_gemini_api_key_here
+```
+
+> Never commit your `.env` file. Make sure it's listed in `.gitignore`.
+
+## 4. Run the Development Server
+
+```bash
+npm run dev
+```
+
+The app will be available at `http://localhost:3000` (or the port shown in your terminal).
+
+## 5. Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+# Deployment
+
+The live demo is currently exposed via a **Cloudflare Tunnel**:
+
+🔗 **[https://lodging-ever-screen-shaved.trycloudflare.com/](https://lodging-ever-screen-shaved.trycloudflare.com/)**
+
+To run your own tunnel against a local instance:
+
+```bash
+cloudflared tunnel --url http://localhost:3000
+```
+
+> Quick Tunnels generate a random `trycloudflare.com` URL each time they're started, so the link above may change on redeploys. For a stable production URL, consider deploying to a platform such as Vercel, Netlify, or a named Cloudflare Tunnel.
+
+---
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<p align="center">
+  Made with care for accessible healthcare guidance.
+</p>
