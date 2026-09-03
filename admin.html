@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JRS Hospital Command & Clinical Software Console</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen font-sans antialiased text-slate-900 bg-[#f8fafc] selection:bg-blue-600 selection:text-white pb-20">
+
+  <!-- ========================================================================= -->
+  <!-- TOP BACKEND COMMAND HEADER -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+
+    <!-- Main Navigation Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-xl shadow-md shadow-blue-500/20">
+          ⚡
+        </div>
+        <div>
+          <h1 class="text-lg font-black text-slate-900 tracking-tight flex items-center space-x-2">
+            <span>JRS Hospital & Doctor Command Console</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200 uppercase font-mono font-bold">Admin Software</span>
+          </h1>
+          <p class="text-xs text-slate-500">Emergency 112/108 Dispatches • Doctor Tele-Rx Issuer • Pharmacy Inventory Control</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav id="admin-nav-tabs" class="flex items-center space-x-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200">
+        <button data-tab="tab-dispatch" class="admin-tab active px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-blue-600 shadow-xs flex items-center space-x-1.5">
+          <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+          <span>Ambulance Dispatches</span>
+        </button>
+        <button data-tab="tab-doctor-rx" class="admin-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center space-x-1.5">
+          <i data-lucide="stethoscope" class="w-3.5 h-3.5 text-blue-600"></i>
+          <span>Doctor Tele-Rx Issuer</span>
+        </button>
+        <button data-tab="tab-inventory" class="admin-tab px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center space-x-1.5">
+          <i data-lucide="pill" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>Pharmacy Inventory</span>
+        </button>
+        <a href="index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-blue-700 hover:bg-blue-50 flex items-center space-x-1.5 transition-colors border border-blue-200">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Patient Portal</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN BACKEND SOFTWARE WORKSPACE -->
+  <!-- ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+
+    <!-- KPI Metrics Ribbon -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 border-l-4 border-l-red-600 shadow-xs space-y-1">
+        <div class="flex items-center justify-between text-xs text-slate-500">
+          <span class="font-bold">Active SOS Ambulances</span>
+          <i data-lucide="ambulance" class="w-4 h-4 text-red-600"></i>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="kpi-active-dispatches">--</div>
+        <span class="text-[10px] text-red-600 font-mono font-bold">112/108 ACLS Dispatches</span>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 border-l-4 border-l-blue-600 shadow-xs space-y-1">
+        <div class="flex items-center justify-between text-xs text-slate-500">
+          <span class="font-bold">Online Specialists</span>
+          <i data-lucide="stethoscope" class="w-4 h-4 text-blue-600"></i>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="kpi-online-doctors">9 Active</div>
+        <span class="text-[10px] text-blue-600 font-mono font-bold">Cardio, Derma, Ortho, Peds</span>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 border-l-4 border-l-amber-500 shadow-xs space-y-1">
+        <div class="flex items-center justify-between text-xs text-slate-500">
+          <span class="font-bold">Pharmacy Inventory</span>
+          <i data-lucide="package-check" class="w-4 h-4 text-amber-600"></i>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="kpi-pharmacy-stock">60 Items</div>
+        <span class="text-[10px] text-amber-600 font-mono font-bold">Tablets & Syrups Live</span>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: AMBULANCE SOS DISPATCH COMMAND CENTER -->
+    <!-- ========================================================================= -->
+    <section id="tab-dispatch" class="admin-content block space-y-4">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="radio" class="w-4 h-4 text-red-600 animate-pulse"></i>
+              <span>National 112 / 108 Emergency Ambulance Dispatch Queue</span>
+            </h2>
+            <p class="text-xs text-slate-500">Real-time status of emergency dispatches. Hospital staff can update live ambulance status directly into SQLite.</p>
+          </div>
+          <button id="btn-refresh-dispatches" class="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 flex items-center space-x-1.5 self-start transition-colors">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-blue-600"></i>
+            <span>Refresh Queue</span>
+          </button>
+        </div>
+
+        <!-- Dispatches Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-700">
+            <thead class="bg-slate-50 text-slate-500 font-mono uppercase text-[10px] border-b border-slate-200">
+              <tr>
+                <th class="p-3 font-bold">Dispatch ID</th>
+                <th class="p-3 font-bold">Patient & Blood</th>
+                <th class="p-3 font-bold">Assigned Unit & Paramedic</th>
+                <th class="p-3 font-bold">Hospital Base</th>
+                <th class="p-3 font-bold">ETA</th>
+                <th class="p-3 font-bold">Live Status</th>
+                <th class="p-3 text-right font-bold">Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="dispatches-table-body" class="divide-y divide-slate-100 font-medium">
+              <tr><td colspan="7" class="p-4 text-center text-slate-400">Loading live dispatches from SQLite...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: DOCTOR CLINICAL QUEUE & TELE-RX ISSUER -->
+    <!-- ========================================================================= -->
+    <section id="tab-doctor-rx" class="admin-content hidden space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Doctor Information & Patient Selector (5 Cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+            <h2 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
+              <span>Active Consulting Specialist</span>
+            </h2>
+
+            <div class="space-y-3">
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Select Consulting Doctor:</label>
+                <select id="select-admin-doctor" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:bg-white focus:border-blue-600">
+                  <option value="doc-on-1">Dr. Ashok Seth (Cardiology - Fortis Escorts)</option>
+                  <option value="doc-on-2">Dr. Devi Prasad Shetty (Cardiothoracic - Narayana)</option>
+                  <option value="doc-on-3">Dr. Rashmi Shetty (Dermatology - Mumbai)</option>
+                  <option value="doc-on-4">Dr. Deepali Bhardwaj (Dermatology - Delhi)</option>
+                  <option value="doc-on-5">Dr. Pradeep Sharma (Orthopedics - BLK-Max)</option>
+                  <option value="doc-on-8">Dr. Anupam Sibal (Pediatrics - Apollo / JRS)</option>
+                </select>
+              </div>
+
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-slate-900" id="admin-doc-name">Dr. Ashok Seth</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono font-bold">MCI Verified</span>
+                </div>
+                <div class="text-[11px] text-blue-700 font-mono font-bold" id="admin-doc-license">License: MCI-DEL-18492</div>
+                <div class="text-[11px] text-slate-500" id="admin-doc-hospital">Fortis Escorts Heart Institute, New Delhi</div>
+              </div>
+
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Patient Name:</label>
+                <input type="text" id="input-rx-patient-name" value="Rajesh Sharma" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600 font-bold">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Digital Prescription Writer (7 Cols) -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="bg-white border border-blue-200 rounded-2xl p-5 shadow-xs space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h2 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                  <i data-lucide="file-signature" class="w-4 h-4 text-blue-600"></i>
+                  <span>Digital Tele-Rx Prescription Pad</span>
+                </h2>
+                <p class="text-xs text-slate-500">Doctor can write medical directives and sign digitally with official MCI license.</p>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono text-[10px] font-bold">TELE-RX READY</span>
+            </div>
+
+            <!-- Form -->
+            <div class="space-y-3">
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Prescribed Medicines (Comma-separated or from Formulary):</label>
+                <input type="text" id="input-rx-medicines" value="Dolo 650, Benadryl Cough Syrup, Pan-D" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:bg-white focus:border-blue-600">
+                <span class="text-[10px] text-slate-500 mt-1 block">e.g. Dolo 650, Benadryl Cough Syrup (100ml), Augmentin 625 Duo, Pan-D</span>
+              </div>
+
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Dosage & Instructions for Patient:</label>
+                <textarea id="input-rx-instructions" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 focus:outline-none focus:bg-white focus:border-blue-600 leading-relaxed font-sans">1. Tab Dolo 650mg - 1 tab TDS after meals for 3 days.
+2. Syrup Benadryl - 10ml TDS for persistent dry cough for 5 days.
+3. Cap Pan-D - 1 cap OD 30 minutes before breakfast.
+Drink plenty of warm fluids and rest.</textarea>
+              </div>
+
+              <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl text-xs text-slate-700 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <i data-lucide="award" class="w-4 h-4 text-blue-600"></i>
+                  <span>Digital Cryptographic Stamp: <strong class="text-blue-900">JRS-TELE-RX-VERIFIED</strong></span>
+                </div>
+                <span class="font-mono text-[10px] text-blue-700 font-bold">Valid Nationwide</span>
+              </div>
+
+              <button id="btn-issue-tele-rx" class="btn-primary-blue w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-2 shadow-xs text-white">
+                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                <span>✍️ Issue Digitally Signed Tele-Rx to Patient</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: PHARMACY INVENTORY & FORMULARY CONTROL -->
+    <!-- ========================================================================= -->
+    <section id="tab-inventory" class="admin-content hidden space-y-4">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="database" class="w-4 h-4 text-amber-600"></i>
+              <span>Indian Pharmaceutical Formulary & Inventory (SQLite Managed)</span>
+            </h2>
+            <p class="text-xs text-slate-500">Edit price (₹ MRP) and stock status live in the SQLite database.</p>
+          </div>
+          
+          <div class="flex items-center space-x-3">
+            <input type="text" id="input-search-inventory" placeholder="Search medicine..." class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-amber-500">
+            <select id="select-filter-inventory-form" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-700 focus:outline-none focus:bg-white focus:border-amber-500 font-bold">
+              <option value="all">All Dosage Forms</option>
+              <option value="syrup">🧴 Syrups & Oral Suspensions</option>
+              <option value="tablet">💊 Tablets & Capsules</option>
+              <option value="inhaler">💨 Inhalers & Sprays</option>
+              <option value="injection">💉 Injections & Pens</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="overflow-x-auto max-h-[550px] overflow-y-auto">
+          <table class="w-full text-left text-xs text-slate-700">
+            <thead class="bg-slate-50 sticky top-0 text-slate-500 font-mono uppercase text-[10px] border-b border-slate-200">
+              <tr>
+                <th class="p-3 font-bold">Medicine Brand & Generic</th>
+                <th class="p-3 font-bold">Form</th>
+                <th class="p-3 font-bold">Category</th>
+                <th class="p-3 font-bold">Manufacturer</th>
+                <th class="p-3 font-bold">Price (₹ MRP)</th>
+                <th class="p-3 font-bold">Stock Status</th>
+                <th class="p-3 text-right font-bold">Save</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body" class="divide-y divide-slate-100 font-medium">
+              <tr><td colspan="7" class="p-4 text-center text-slate-400">Loading medicines from database...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- End of Workspace Sections -->
+
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
